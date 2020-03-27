@@ -3,43 +3,38 @@ package ua.lviv.iot.spring.first.rest.service;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.lviv.iot.spring.first.rest.db.StudentRepository;
 import ua.lviv.iot.spring.first.rest.model.Student;
 
 @Service
 public class StudentsService {
+
+  @Autowired
+  private StudentRepository studentRepository;
   private List<Student> studentList = new LinkedList<>(
       Arrays.asList(new Student("John", "Doe"), new Student("Quentin", "Quarantino")));
 
-  public  void updateStudent(String name, Student student) {
-    for (int i = 0; i < studentList.size(); i++) {
-      Student s = studentList.get(i);
-      if (s.getFirstName().equals(name)) {
-        studentList.set(i, student);
-        return;
-      }
-    }
+  public void updateStudent(Integer id, Student student) {
+    studentRepository.deleteById(id);
+    studentRepository.saveAndFlush(student);
   }
 
   public List<Student> getStudentList() {
-    return studentList;
+    return studentRepository.findAll();
   }
 
-  public Student getParticularStudent (String name) {
-    return studentList.stream().filter(s -> s.getFirstName().equals(name)).findFirst().get();
+  public Student getParticularStudent(Integer id) {
+    return studentRepository.getOne(id);
   }
 
   public Student addStudent(Student student) {
-    studentList.add(student);
+    studentRepository.saveAndFlush(student);
     return student;
   }
 
-  public void deleteStudent(String name) {
-    for(Student n: studentList) {
-      if(n.getFirstName().equals(name)){
-        studentList.remove(n);
-        return;
-      }
-    }
+  public void deleteStudent(Integer id) {
+    studentRepository.deleteById(id);
   }
 }

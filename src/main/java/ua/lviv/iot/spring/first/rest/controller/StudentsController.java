@@ -13,16 +13,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ua.lviv.iot.spring.first.rest.db.StudentRepository;
 import ua.lviv.iot.spring.first.rest.model.Student;
 import ua.lviv.iot.spring.first.rest.service.StudentsService;
 
 //@RequestMapping("/students")
 @RestController
 public class StudentsController {
+
   @Autowired
   private StudentsService studentsService;
-  private AtomicInteger idCounter = new AtomicInteger();
-  private Map<Integer, Student> students = new HashMap<>();
+  @Autowired
+  private StudentRepository studentRepository;
+
   @GetMapping("/students")
   public List<Student> getStudents() {
     return studentsService.getStudentList();
@@ -30,33 +33,34 @@ public class StudentsController {
 
   @RequestMapping(method = RequestMethod.POST, value = "/students")
   public Student addStudent(final @RequestBody Student student) {
-    student.setId(idCounter.incrementAndGet());
-    students.put(student.getId(), student);
+
     return studentsService.addStudent(student);
   }
 
-  @GetMapping("/students/{name}")
-  public Student getParticularStudent (@PathVariable String name) {
-    return studentsService.getParticularStudent(name);
+  @GetMapping("/students/{id}")
+  public Student getParticularStudent(@PathVariable Integer id) {
+    return studentsService.getParticularStudent(id);
   }
-  @GetMapping(path= "/{id}")
+
+  @GetMapping(path = "/{id}")
   public Student getStudent(@PathVariable("id") Integer studentid) {
-    System.out.println(studentid);
     return new Student("pedro", "aldomovar");
   }
-  @RequestMapping(method = {RequestMethod.GET, RequestMethod.PUT}, path = "/smartest" )
+
+  @RequestMapping(method = {RequestMethod.GET, RequestMethod.PUT}, path = "/smartest")
   public Student getSmartest() {
     return new Student("tapas", "karantino");
   }
 
-  @RequestMapping(method = RequestMethod.PUT, value = "/students/{name}")
-  public void updateStudent (@RequestBody Student student, @PathVariable String name) {
-  studentsService.updateStudent(name, student);
+  @RequestMapping(method = RequestMethod.PUT, value = "/students/{id}")
+  public void updateStudent(@RequestBody Student student, @PathVariable Integer id) {
+    studentsService.updateStudent(id, student);
   }
+
   @RequestMapping(method = RequestMethod.DELETE, value = "/students/{id}")
-  public ResponseEntity<Student> deleteStudent (@RequestBody  @PathVariable Integer id) {
-  HttpStatus status =  id == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-        return ResponseEntity.status(status).build();
+  public ResponseEntity<Student> deleteStudent(@RequestBody @PathVariable Integer id) {
+    HttpStatus status = id == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+    return ResponseEntity.status(status).build();
   }
 
 }
