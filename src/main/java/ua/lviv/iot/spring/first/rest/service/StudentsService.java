@@ -13,8 +13,9 @@ public class StudentsService {
 
   @Autowired
   private StudentRepository studentRepository;
-  private List<Student> studentList = new LinkedList<>(
-      Arrays.asList(new Student("John", "Doe"), new Student("Quentin", "Quarantino")));
+  private List<Student> studentList =
+      new LinkedList<>(
+          Arrays.asList(new Student("John", "Doe"), new Student("Quentin", "Quarantino")));
 
   public void updateStudent(Integer id, Student student) {
     studentRepository.deleteById(id);
