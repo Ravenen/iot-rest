@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ua.lviv.iot.spring.first.rest.business.GroupService;
 import ua.lviv.iot.spring.first.rest.model.Group;
+import ua.lviv.iot.spring.first.rest.service.GroupService;
 
 @RequestMapping("/groups")
 @RestController

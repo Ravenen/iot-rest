@@ -38,4 +38,8 @@ public class StudentsService {
   public void deleteStudent(Integer id) {
     studentRepository.deleteById(id);
   }
+
+  public List<Student> getAllByFirstName(String firstName) {
+    return studentRepository.findAllByFirstName(firstName);
+  }
 }

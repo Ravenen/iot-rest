@@ -1,9 +1,6 @@
 package ua.lviv.iot.spring.first.rest.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.lviv.iot.spring.first.rest.db.StudentRepository;
 import ua.lviv.iot.spring.first.rest.model.Student;
 import ua.lviv.iot.spring.first.rest.service.StudentsService;
 
-//@RequestMapping("/students")
+@RequestMapping("/students")
 @RestController
 public class StudentsController {
 
@@ -26,10 +24,15 @@ public class StudentsController {
   @Autowired
   private StudentRepository studentRepository;
 
-  @GetMapping("/students")
-  public List<Student> getStudents() {
-    return studentsService.getStudentList();
+  @GetMapping(path = "?firstName= {firstName}")
+  public List<Student> getStudents(
+      final @RequestParam(value = "firstName", required = false) String firstName) {
+    if (firstName == null) {
+      return studentsService.getStudentList();
+    }
+    return studentsService.getAllByFirstName(firstName);
   }
+
 
   @RequestMapping(method = RequestMethod.POST, value = "/students")
   public Student addStudent(final @RequestBody Student student) {
