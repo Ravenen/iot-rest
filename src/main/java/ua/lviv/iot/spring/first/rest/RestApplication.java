@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("ua.lviv.iot.spring.first.rest.db.StudentRepository")
+@EnableJpaRepositories("ua.lviv.iot.spring.first.rest.db")
 @ComponentScan("ua.lviv.iot.spring.first.rest.*")
 public class RestApplication {
 
