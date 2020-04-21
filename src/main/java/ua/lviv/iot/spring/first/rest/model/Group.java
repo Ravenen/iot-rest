@@ -52,5 +52,6 @@ public class Group {
     this.enrollmentYear = enrollmentYear;
   }
 
-  public Group() {}
+  public Group() {
+  }
 }

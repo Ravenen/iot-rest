@@ -1,7 +1,5 @@
 package ua.lviv.iot.spring.first.rest.service;
 
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +11,6 @@ public class StudentsService {
 
   @Autowired
   private StudentRepository studentRepository;
-  private List<Student> studentList =
-      new LinkedList<>(
-          Arrays.asList(new Student("John", "Doe"), new Student("Quentin", "Quarantino")));
 
   public void updateStudent(Integer id, Student student) {
     studentRepository.deleteById(id);

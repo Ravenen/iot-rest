@@ -22,8 +22,8 @@ public class Subject {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "Student_Subjects", joinColumns = {
-      @JoinColumn(name = "subject_id", nullable = false)}, inverseJoinColumns = {
-      @JoinColumn(name = "student_id", nullable = false)})
+      @JoinColumn(name = "subject_id", nullable = false) }, inverseJoinColumns = {
+          @JoinColumn(name = "student_id", nullable = false) })
   @JsonIgnoreProperties("subjects")
   private Set<Student> students;
 

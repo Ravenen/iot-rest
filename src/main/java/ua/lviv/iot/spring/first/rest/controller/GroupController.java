@@ -11,7 +11,8 @@ import ua.lviv.iot.spring.first.rest.service.GroupService;
 @RequestMapping("/groups")
 @RestController
 public class GroupController {
-  @Autowired private GroupService groupService;
+  @Autowired
+  private GroupService groupService;
 
   @GetMapping
   public List<Group> getAllGroups() {
